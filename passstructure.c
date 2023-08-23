@@ -9,10 +9,10 @@ typedef struct studentsData
     char department[34];
     int yaer;
 } studentsData;
-void check(char* dep1 , char* dep2){
-    if(dep1 == dep2){
+void check(char* s1, char* s2){
+    if(s1 == s2){
         printf("they both are equal");
-    }else{
+     }else{
         printf("they are not equal");
     }
 
