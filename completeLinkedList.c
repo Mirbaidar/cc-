@@ -7,7 +7,7 @@ struct node
     int data;
     struct node *adress;
 };
-struct node *start = NULL, *temp, *newnode, *previous;
+struct node *start = NULL, *temp, *newnode, *previous, *next;
 char choice;
 
 void create();
@@ -18,6 +18,7 @@ void insert_middle();
 void delete_first();
 void delete_last();
 void delete_middle();
+void linear_search();
 
 int main()
 {
@@ -26,7 +27,7 @@ int main()
 
     do
     {
-        printf("......Enter your choice 1-create 2-insert_first 3-insert_middle  4-insert_last  5-delete_first 7-delete_last 9-display :....... \n ");
+        printf("......Enter your choice 1-create \n2-insert_first 3-insert_middle   4-insert_last \n5-delete_first 6-delete_middle 7-delete_last \n8-search node \n9-display :....... \n ");
         scanf("%d", &fun);
         switch (fun)
         {
@@ -45,10 +46,15 @@ int main()
         case 5:
             delete_first();
             break;
+        case 6:
+            delete_middle();
+            break;
         case 7:
             delete_last();
             break;
-
+        case 8:
+            linear_search();
+            break;
         case 9:
             display();
             break;
@@ -232,6 +238,62 @@ void delete_last()
     }
 }
 
-void delete_middle(){
-    
+void delete_middle()
+{
+    temp = start;
+    if (start == NULL)
+    {
+        printf("list is empty : \n");
+    }
+    else
+    {
+        int position;
+        printf("enter the node position to delete it : \n");
+        scanf("%d", &position);
+        int i = 1;
+        while (i < position)
+        {
+            previous = temp;
+            temp = temp->adress;
+            i++;
+        }
+        next = temp->adress;
+        previous->adress = next;
+        printf("Deleted node of position %d , data : %d", position, temp->data);
+        free(temp);
+    }
+}
+
+void linear_search()
+{
+    int searched_node, found = 0;
+    if (start == NULL)
+    {
+        printf("the list is empty :\n ");
+    }
+    else
+    {
+        printf("enter the node to search : \n ");
+        scanf("%d", &searched_node);
+
+        temp = start;
+
+        while (temp != NULL)
+        {
+            if (temp->data == searched_node)
+            {
+                found = 1;
+                break;
+            }
+            temp = temp->adress;
+        }
+    }
+    if (found == 1)
+    {
+        printf("the node is inside list : %d \n", searched_node);
+    }
+    else
+    {
+        printf("The node does not exist in list : \n");
+    }
 }
