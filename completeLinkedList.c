@@ -7,18 +7,20 @@ struct node
     int data;
     struct node *adress;
 };
-struct node *start = NULL, *temp, *newnode, *previous, *next;
+struct node *start = NULL, *temp, *newnode, *previous, *next, *arr[50];
 char choice;
 
-void create();
-void display();
-void insert_first();
-void insert_last();
-void insert_middle();
-void delete_first();
-void delete_last();
-void delete_middle();
-void linear_search();
+void create();        // creates the lined list
+void display();       // displays the node data
+void insert_first();  // inserts node at fiest position
+void insert_last();   // inserts node at last position
+void insert_middle(); // inserts node at middle
+void delete_first();  // deletes the first node
+void delete_last();   // deletes the last node
+void delete_middle(); // deletes the node at any position
+void linear_search(); // performs the linear search on node data
+void count();         // counts the nodes to check some conditions
+void reverse();       // displays the nodes in reverse order
 
 int main()
 {
@@ -27,7 +29,7 @@ int main()
 
     do
     {
-        printf("......Enter your choice 1-create \n2-insert_first 3-insert_middle   4-insert_last \n5-delete_first 6-delete_middle 7-delete_last \n8-search node \n9-display :....... \n ");
+        printf("......Enter your choice \n1-create \n2-insert_first 3-insert_middle   4-insert_last \n5-delete_first 6-delete_middle 7-delete_last \n8-search node\n9-count \n10-display revese nodes \n11-display\n13-exit :....... \n ");
         scanf("%d", &fun);
         switch (fun)
         {
@@ -56,13 +58,19 @@ int main()
             linear_search();
             break;
         case 9:
+            count();
+            break;
+        case 10:
+            reverse();
+            break;
+        case 11:
             display();
             break;
         default:
             printf("you have entered wronng choice \n ");
             break;
         }
-    } while (fun != 10);
+    } while (fun != 13);
     return 0;
 }
 
@@ -295,5 +303,50 @@ void linear_search()
     else
     {
         printf("The node does not exist in list : \n");
+    }
+}
+
+void count()
+{
+    temp = start;
+    int count = 0;
+    if (start == NULL)
+    {
+        printf("thr list is empty :\n");
+    }
+    else
+    {
+        while (temp != NULL)
+        {
+            count++;
+            temp = temp->adress;
+        }
+    }
+    printf("number of elements in linked list are as : %d", count);
+}
+
+void reverse()
+{
+    int i = 0;
+    temp = start;
+    if (start == NULL)
+    {
+        printf("the list is empty : \n");
+    }
+    else
+    {
+        while (temp != NULL)
+        {
+            arr[i] = temp;
+
+            i++;
+            temp = temp->adress;
+        }
+        i = i - 1;
+        printf("the reverse linkedlist nodes :\n");
+        for (int j = i; j >= 0; j--)
+        {
+            printf("%d  ", arr[j]->data);
+        }
     }
 }
