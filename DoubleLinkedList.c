@@ -8,19 +8,23 @@ struct dnode
     int data;
     struct dnode *radd;
 };
-struct dnode *start = NULL, *temp, *new1;
+struct dnode *start = NULL, *temp, *new1, *previous;
 char choice;
 
 void create();
 void display();
+void delete_first();
+void delete_last();
 void display_reverse();
+
 int main()
 {
     int funSle;
-    printf("------------Double Linked List ------------");
+    printf("------------Double Linked List ------------\n");
     do
     {
-        printf("Enter your choice \n1-create  \n2-display \n3-void display_reverse \n4-Exit \n");
+        printf("\n");
+        printf("Enter your choice \n1-create  \n2-display \n3-void display_reverse \n7-delete first \n9-delete_last\n10-Exit \n");
         scanf("%d", &funSle);
 
         switch (funSle)
@@ -32,13 +36,20 @@ int main()
             display();
             break;
         case 3:
-             display_reverse();
+            display_reverse();
             break;
+        case 7:
+            delete_first();
+            break;
+        case 9:
+            delete_last();
+            break;
+            
         default:
             printf("well u have exited the program : \n");
             break;
         }
-    } while (funSle != 4);
+    } while (funSle != 10);
 
     return 0;
 }
@@ -111,5 +122,41 @@ void display_reverse()
             printf("%d  ", temp->data);
             temp = temp->ladd;
         }
+    }
+}
+
+void delete_first()
+{
+    if (start == NULL)
+    {
+        printf("The list is empty : ");
+    }
+    else
+    {
+        temp = start;
+        start = start->radd;
+        start->ladd = NULL;
+        printf("Deleted node : %d  \n", temp->data);
+        free(temp);
+    }
+}
+
+void delete_last()
+{
+    if (start == NULL)
+    {
+        printf("the list is empty : \n");
+    }
+    else
+    {
+        temp = start;
+        while (temp->radd != NULL)
+        {
+            temp = temp->radd;
+        }
+        previous = temp->ladd;
+        previous->radd = NULL;
+        printf("Last deleted node : %d", temp->data);
+        free(temp);
     }
 }
