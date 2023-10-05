@@ -8,10 +8,13 @@ struct dnode
     int data;
     struct dnode *radd;
 };
-struct dnode *start = NULL, *temp, *new1, *previous;
+struct dnode *start = NULL, *temp, *new1, *previous, *next;
 char choice;
 
 void create();
+void insert_first();
+void insert_last();
+void insert_middle();
 void display();
 void delete_first();
 void delete_last();
@@ -24,7 +27,7 @@ int main()
     do
     {
         printf("\n");
-        printf("Enter your choice \n1-create  \n2-display \n3-void display_reverse \n7-delete first \n9-delete_last\n10-Exit \n");
+        printf("Enter your choice \n1-create \n2-insert_first \n3-insert_last \n4-insert_middle \n5-display \n6display_reverse \n7-delete first \n9-delete_last\n10-Exit \n");
         scanf("%d", &funSle);
 
         switch (funSle)
@@ -33,9 +36,18 @@ int main()
             create();
             break;
         case 2:
-            display();
+            insert_first();
             break;
         case 3:
+            insert_last();
+            break;
+        case 4:
+            insert_middle();
+            break;
+        case 5:
+            display();
+            break;
+        case 6:
             display_reverse();
             break;
         case 7:
@@ -44,7 +56,7 @@ int main()
         case 9:
             delete_last();
             break;
-            
+
         default:
             printf("well u have exited the program : \n");
             break;
@@ -158,5 +170,88 @@ void delete_last()
         previous->radd = NULL;
         printf("Last deleted node : %d", temp->data);
         free(temp);
+    }
+}
+
+void insert_first()
+{
+    int n;
+    if (start == NULL)
+    {
+        printf("list is empty : \n");
+    }
+    else
+    {
+        printf("Enter the element : \n");
+        scanf("%d", &n);
+        new1 = (struct dnode *)malloc(sizeof(struct dnode));
+        new1->ladd = new1->radd = NULL;
+        new1->data = n;
+
+        new1->radd = start;
+        start->ladd = new1;
+
+        start = new1;
+    }
+}
+
+void insert_last()
+{
+    int n;
+    if (start == NULL)
+    {
+        printf("The list is empty : \n");
+    }
+    else
+    {
+
+        printf("Enter the number : \n");
+        scanf("%d", &n);
+
+        new1 = (struct dnode *)malloc(sizeof(struct dnode));
+        new1->ladd = new1->radd = NULL;
+        new1->data = n;
+
+        temp = start;
+        while (temp->radd != NULL)
+        {
+            temp = temp->radd;
+        }
+        temp->radd = new1;
+        new1->ladd = temp;
+    }
+}
+
+void insert_middle()
+{
+    int n, pos;
+    
+    if (start == NULL)
+    {
+        printf("thr list is empty : \n");
+    }
+    else
+    {
+        printf("Enter the element : \n");
+        scanf("%d", &n);
+
+        new1 = (struct dnode *)malloc(sizeof(struct dnode));
+        new1->ladd = new1->radd = NULL;
+        new1->data = n;
+
+        printf("enter the node position : \n");
+        scanf("%d", &pos);
+        int i = 1;
+        next = start;
+        while (i < pos)
+        {
+            previous = next;
+            next = next->radd;
+        }
+        previous->radd = new1;
+        new1->ladd = previous;
+
+        new1->radd = next;
+        next->ladd = new1;
     }
 }
