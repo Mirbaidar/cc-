@@ -1,64 +1,53 @@
 #include <stdio.h>
+#include <conio.h>
 #include <stdlib.h>
-struct cdnode
+
+struct cnode
 {
-    struct cdnode *ladd;
+    struct cnode *ladd;
     int data;
-    struct cdnode *radd;
+    struct cnode *radd;
 };
+struct cnode *start, *temp, *new1, *last, *previous;
 char ch;
-struct cdnode *start, *new1, *temp;
 void create();
+void insert_first();
 void display();
+void insert_middle();
+void insert_last();
 int main()
 {
- printf("-----------------CIRCULAR DOUBLE LINKED LIST-------------------\n");
-    int choice;
-    printf("Enter the choice \n ");
-    printf("1-create \n10--display \n13-exit");
-    scanf("%d",&choice);
-while(choice != 13){
-    switch (choice)
-    {
-    case 1:
-        create();
-        break;
-    case 10 :
-         display();
-         break;    
-    
-    default:
-    printf("unmatched choice");
-        break;
-    }
-    printf("Enter the choice \n ");
-    printf("1-create \n10--display \n13-exit");
-    scanf("%d",&choice);
-}
+    create();
+    insert_first();
+    display();
+    insert_middle();
+    display();
+    insert_last();
+    display();
     return 0;
 }
+
 void create()
 {
     int n;
-    printf("Enter the number: \n");
+    printf("enter the data : \n");
     scanf("%d", &n);
-    start = (struct cdnode *)malloc(sizeof(struct cdnode));
+
+    start = (struct cnode *)malloc(sizeof(struct cnode));
     start->ladd = start->radd = NULL;
     start->data = n;
 
-    start->ladd = start;
-    start->radd = start;
-
     temp = start;
-    printf("Enter y to continue : \n");
+    temp->ladd = start;
+    temp->radd = start;
+
+    printf("want to continue press 'y' : ");
     ch = getche();
-
-    while (ch == 'y')
+    while (ch == 'y' || ch == 'Y')
     {
-        printf("Enter the number: \n");
+        printf("\nEnter the data : \n");
         scanf("%d", &n);
-
-        new1 = (struct cdnode *)malloc(sizeof(struct cdnode));
+        new1 = (struct cnode *)malloc(sizeof(struct cnode));
         new1->ladd = new1->radd = NULL;
         new1->data = n;
 
@@ -68,20 +57,112 @@ void create()
 
         start->ladd = new1;
         new1->radd = start;
+        printf("want to continue press 'y' : ");
+        ch = getche();
     }
 }
 
-void display(){
-    temp= start;
-
-    if(start==NULL){
-        printf("The list is empty : \n");
-
-    }else{
-        printf("The circular linked list nodes \n ");
-        do{
-            printf("%d  ",temp->data);
+void display()
+{
+    temp = start;
+    if (start == NULL)
+    {
+        printf("the list is empty : \n ");
+    }
+    else
+    {
+        do
+        {
+            printf("%d   ", temp->data);
             temp = temp->radd;
-        }while(temp != start);
+        } while (temp != start);
+    }
+}
+
+void insert_first()
+{
+
+    int n;
+    if (start == NULL)
+    {
+        printf("the list is empty : \n ");
+    }
+    else
+    {
+        printf("\nEnter the node at first position : \n");
+        scanf("%d", &n);
+
+        new1 = (struct cnode *)malloc(sizeof(struct cnode));
+        new1->ladd = new1->radd = NULL;
+        new1->data = n;
+
+        temp = start;      // pointer at first node
+        last = temp->ladd; // pointer at last node
+
+        new1->radd = start;
+        start->ladd = new1;
+        start = new1;
+
+        new1->ladd = last;
+        last->radd = new1;
+    }
+}
+
+void insert_middle()
+{
+    temp = start;
+    int n, pos;
+    if (start == NULL)
+    {
+        printf("the list os empty \n");
+    }
+    else
+    {
+        printf("enter the position of node : \n");
+        scanf("%d", &pos);
+        printf("enter the  node data: \n");
+        scanf("%d", &n);
+
+        new1 = (struct cnode *)malloc(sizeof(struct cnode));
+        new1->ladd = new1->radd = NULL;
+        new1->data = n;
+
+        int i = 1;
+        while (i < pos)
+        {
+            temp = temp->radd;
+            i++;
+        }
+
+        previous = temp->ladd; // previous node
+
+        previous->radd = new1;
+        new1->ladd = previous;
+        new1->radd = temp;
+        temp->ladd = new1;
+    }
+}
+void insert_last()
+{
+    int n;
+    temp = start;
+    if (start == NULL)
+    {
+        printf("the list is empty ; \n");
+    }
+    else
+    {
+        printf("Enter the last node data : \n");
+        scanf("%d", &n);
+        new1 = (struct cnode *)malloc(sizeof(struct cnode));
+        new1->ladd = new1->radd = NULL;
+        new1->data = n;
+
+        last = temp->ladd;
+        last->radd = new1;
+        new1->ladd = last;
+
+        new1->radd = start;
+        start->ladd = new1;
     }
 }
