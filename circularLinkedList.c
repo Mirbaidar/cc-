@@ -8,22 +8,61 @@ struct cnode
     int data;
     struct cnode *radd;
 };
-struct cnode *start, *temp, *new1, *last, *previous;
+struct cnode *start, *temp, *new1, *last, *previous, *next;
 char ch;
-void create();
-void insert_first();
-void display();
-void insert_middle();
-void insert_last();
+
+void create();        // creates the circular linked list
+void insert_first();  // inserts node at first position
+void display();       // displays the list
+void insert_middle(); // inserts the node at middle
+void insert_last();   // inserts node atlast position
+void delete_first();  // deletes node at first position
+void delete_last();   // deletes node at last position
+void delete_middle(); // deletes node at middle position
+
 int main()
 {
-    create();
-    insert_first();
-    display();
-    insert_middle();
-    display();
-    insert_last();
-    display();
+    printf("\n------------------CIRCULAR DOUBLE LINKED LIST--------------\n");
+    int choice;
+    printf("\nEnter the choice \n1-create \n2-insert first \n3-insert middle \n4-insert last \n5-delete-first \n6-delete middle \n7-delete last \n8-display \n15-Exit\n ");
+    scanf("%d", &choice);
+    do
+    {
+        switch (choice)
+        {
+        case 1:
+            create();
+            break;
+        case 2:
+            insert_first();
+            break;
+        case 3:
+            insert_middle();
+            break;
+        case 4:
+            insert_last();
+            break;
+        case 5:
+            delete_first();
+            break;
+        case 6:
+            delete_middle();
+            break;
+        case 7:
+            delete_last();
+            break;
+        case 8:
+            display();
+            break;
+        default:
+            printf("\nENTER THE RIGHT CHOICE \n");
+            break;
+        }
+
+        printf("Enter the choice \n1-create \n2-insert first \n3-insert middle \n4-insert last \n5-delete-first \n6-delete middle \n7-delete last \n8-display \n15-Exit\n ");
+        scanf("%d", &choice);
+    } while (choice != 15);
+
     return 0;
 }
 
@@ -71,6 +110,7 @@ void display()
     }
     else
     {
+        printf("\nThe circular doubleLinkedlist nodes are : \n");
         do
         {
             printf("%d   ", temp->data);
@@ -118,9 +158,9 @@ void insert_middle()
     }
     else
     {
-        printf("enter the position of node : \n");
+        printf("\nEnter the position of node :  \n");
         scanf("%d", &pos);
-        printf("enter the  node data: \n");
+        printf("Enter the  node data: \n");
         scanf("%d", &n);
 
         new1 = (struct cnode *)malloc(sizeof(struct cnode));
@@ -130,7 +170,7 @@ void insert_middle()
         int i = 1;
         while (i < pos)
         {
-            temp = temp->radd;
+            temp = temp->radd; // node after previous
             i++;
         }
 
@@ -152,7 +192,7 @@ void insert_last()
     }
     else
     {
-        printf("Enter the last node data : \n");
+        printf("\nEnter the last node data : \n");
         scanf("%d", &n);
         new1 = (struct cnode *)malloc(sizeof(struct cnode));
         new1->ladd = new1->radd = NULL;
@@ -164,5 +204,74 @@ void insert_last()
 
         new1->radd = start;
         start->ladd = new1;
+    }
+}
+
+void delete_first()
+{
+
+    if (start == NULL)
+    {
+        printf("the list has not been created :\n");
+    }
+    else
+    {
+        temp = start;
+        last = temp->ladd;
+
+        start = start->radd;
+        start->ladd = last;
+        last->radd = start;
+        printf("\nThe first deleted node : %d\n", temp->data);
+        free(temp);
+    }
+}
+
+void delete_last()
+{
+    if (start == NULL)
+    {
+        printf("the list is empty : \n");
+    }
+    else
+    {
+        temp = start;          // first node
+        last = temp->ladd;     // last node
+        previous = last->ladd; // node before last node
+
+        previous->radd = start;
+        start->ladd = previous;
+        printf("\nthe last deleted node is : %d\n", last->data);
+        free(last);
+    }
+}
+
+void delete_middle()
+{
+    temp = start;
+    if (start == NULL)
+    {
+        printf("the list is empty : \n");
+    }
+    else
+    {
+        int pos;
+        printf("\nEnter the node positiion to delete : \n");
+        scanf("%d", &pos);
+
+        int i = 1;
+        while (i < pos)
+        {
+            temp = temp->radd;
+            i++;
+        }
+        previous = temp->ladd;
+        next = temp->radd;
+
+        previous->radd = next;
+        next->ladd = previous;
+
+        printf("\nThe middle deleted node is : %d \n", temp->data);
+        free(temp);
     }
 }
