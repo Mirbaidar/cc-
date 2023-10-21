@@ -1,70 +1,49 @@
 #include <stdio.h>
 #include <conio.h>
 #include <stdlib.h>
-struct tree
+
+struct node
 {
-    struct tree *left;
+    struct node *ladd;
     int data;
-    struct tree *right;
+    struct node *radd;
 };
-struct tree *root, *newone, *temp;
-void create();
-void display();
+
+struct node *root = NULL, *new1;
+int choice, n;
+char ch;
+
 int main()
 {
- create();
- display();
+     printf("------------------------------Tree--------------------\n");
+        printf("1- create\n");
+        printf("2-inorder\n");
+        printf("3-preorder\n");
+        printf("4-postorder");
+
+        printf("enter the choice : \n");
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+        case 1:
+            printf("Enter the element :\n");
+            scanf("%d", &n);
+            new1 = (struct node *)malloc(sizeof(struct node));
+            new1->ladd = new1->radd = NULL;
+            new1->data = n;
+            
+            if (root == NULL)
+            {
+                root = new1;
+            }
+            else
+            {
+                //create(root, new1);
+                printf("enter y to continue : \n");
+                ch = getche();
+            }
+        
+
     return 0;
-}
-void create()
-{
-    int n;
-    printf("Enter the data\n");
-    scanf("%d", &n);
-
-    root = (struct tree *)malloc(sizeof(struct tree));
-    root->left = NULL;
-    root->left = NULL;
-    root->data = n;
-
-    char ch;
-    printf("Enter y to continue : \n");
-    ch = getche();
-
-    while (ch == 'y' || ch == 'Y')
-    {
-        printf("Enter the data\n");
-        scanf("%d", &n);
-        newone = (struct tree *)malloc(sizeof(struct tree));
-        newone->left = NULL;
-        newone->left = NULL;
-        newone->data = n;
-
-        temp = root;
-
-        if (newone->data > temp->data)
-        {
-            temp->right = newone;
-        }
-        else
-        {
-            temp->left = newone;
-        }
-        printf("Enter y to continue : \n");
-        ch = getche();
-    }
-}
-
-void display(){
-    temp= root;
-    while(temp->left != NULL){
-        printf("%d",temp->data);
-        temp=temp->left;
-    }
-    temp= root;
-    while(temp->right != NULL){
-        printf("%d",temp->data);
-        temp=temp->right;
-    }
-
 }
