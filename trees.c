@@ -4,46 +4,56 @@
 
 struct node
 {
-    struct node *ladd;
+    struct node *left;
     int data;
-    struct node *radd;
+    struct node *right;
 };
 
 struct node *root = NULL, *new1;
-int choice, n;
+int n;
 char ch;
+void create(struct node *r, struct node *n);
 
 int main()
 {
-     printf("------------------------------Tree--------------------\n");
-        printf("1- create\n");
-        printf("2-inorder\n");
-        printf("3-preorder\n");
-        printf("4-postorder");
+    printf("-----------------------TREES-------------------------\n");
+    int choice;
+    printf("1- Create\n");
+    printf("2-inorder\n");
+    printf("3-preorder\n");
+    printf("4-postorder\n");
+    scanf("%d", &choice);
 
-        printf("enter the choice : \n");
-        scanf("%d", &choice);
-
-        switch (choice)
+    switch (choice)
+    {
+    case 1:
+        do
         {
-        case 1:
-            printf("Enter the element :\n");
+            printf("Enter the data : \n");
             scanf("%d", &n);
             new1 = (struct node *)malloc(sizeof(struct node));
-            new1->ladd = new1->radd = NULL;
+            new1->left = new1->right = NULL;
             new1->data = n;
-            
             if (root == NULL)
             {
                 root = new1;
             }
             else
             {
-                //create(root, new1);
-                printf("enter y to continue : \n");
-                ch = getche();
+                create(root, new1);
             }
-        
+            printf("Want to continue .press 'y' or 'Y': \n");
+            ch = getche();
+        } while (ch == 'Y' || ch == 'y');
+        break;
 
+    default:
+        printf("unknown choice \n ");
+        break;
+    }
     return 0;
+}
+
+void create(struct node *r, struct node *n)
+{
 }
