@@ -56,4 +56,32 @@ int main()
 
 void create(struct node *r, struct node *n)
 {
+    if (r->data > n->data)
+    {
+        if (r->left == NULL)
+        {
+            r->left = new1;
+        }
+        else
+        {
+            create(r->left, n);
+        }
+    }
+
+    if (r->data < new1->data)
+    {
+        if (r->right == NULL)
+        {
+            r->right = n;
+        }
+        else
+        {
+            create(r->right, n);
+        }
+    }
+
+    if (n->data == r->data)
+    {
+        printf("duplicate element \n ");
+    }
 }
