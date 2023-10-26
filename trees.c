@@ -11,24 +11,28 @@ struct node
 
 struct node *root = NULL, *new1;
 int n;
-char ch;
+int ch;
+char add;
 void create(struct node *r, struct node *n);
+void inorder(struct node *p);
 
 int main()
 {
     printf("-----------------------TREES-------------------------\n");
     int choice;
-    printf("1- Create\n");
-    printf("2-inorder\n");
-    printf("3-preorder\n");
-    printf("4-postorder\n");
-    scanf("%d", &choice);
-
-    switch (choice)
+    do
     {
-    case 1:
-        do
+        printf("1- Create\n");
+        printf("2-inorder\n");
+        printf("3-preorder\n");
+        printf("4-postorder\n");
+        printf("10-Exit\n");
+        scanf("%d", &choice);
+
+        switch (choice)
         {
+        case 1:
+            
             printf("Enter the data : \n");
             scanf("%d", &n);
             new1 = (struct node *)malloc(sizeof(struct node));
@@ -44,13 +48,17 @@ int main()
             }
             printf("Want to continue .press 'y' or 'Y': \n");
             ch = getche();
-        } while (ch == 'Y' || ch == 'y');
-        break;
+            break;
 
-    default:
-        printf("unknown choice \n ");
-        break;
-    }
+        case 2:
+            inorder(root);
+            break;
+        default:
+            printf("unknown choice \n ");
+            break;
+        }
+    } while (ch != 10 );
+
     return 0;
 }
 
@@ -83,5 +91,15 @@ void create(struct node *r, struct node *n)
     if (n->data == r->data)
     {
         printf("duplicate element \n ");
+    }
+}
+
+void inorder(struct node *p)
+{   printf("Sorted elements in tree using LNR ");
+    if (p != NULL)
+    {
+        inorder(p->left);
+        printf("%d     ", p->data);
+        inorder(p->right);
     }
 }
