@@ -34,7 +34,7 @@ int main()
             printf("you have entered the wrong choice :\n ");
             break;
         }
-        printf("Enter the choice 1-insert 2-display  3-delete 4-exit \n");
+        printf("\nEnter the choice 1-insert 2-display  3-delete 4-exit \n");
         scanf("%d", &choice);
     } while (choice != 4);
     return 0;
@@ -65,7 +65,7 @@ void insert()
 
         temp->add = new1;
         temp = temp->add;
-        printf("want to continue press y :\n");
+        printf("\nwant to continue press y :");
         ch = getche();
     }
 }
