@@ -103,5 +103,6 @@ void display()
         {
             printf("%d    ", arr[i]);
         }
+          printf("%d    ", arr[rear]);
     }
 }
