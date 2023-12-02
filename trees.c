@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <conio.h>
 #include <stdlib.h>
-
 struct node
 {
     struct node *left;
@@ -15,6 +14,9 @@ int ch;
 char add;
 void create(struct node *r, struct node *n);
 void inorder(struct node *p);
+void preorder(struct node *p);
+void postorder(struct node *p);
+void nonrecInorder(struct node *p);
 
 int main()
 {
@@ -22,42 +24,55 @@ int main()
     int choice;
     do
     {
-        printf("1- Create\n");
+        printf("\n1- Create\n");
         printf("2-inorder\n");
         printf("3-preorder\n");
         printf("4-postorder\n");
+        printf("5-nonrecInorder\n");
         printf("10-Exit\n");
         scanf("%d", &choice);
 
         switch (choice)
         {
         case 1:
-            
-            printf("Enter the data : \n");
-            scanf("%d", &n);
-            new1 = (struct node *)malloc(sizeof(struct node));
-            new1->left = new1->right = NULL;
-            new1->data = n;
-            if (root == NULL)
+            do
             {
-                root = new1;
-            }
-            else
-            {
-                create(root, new1);
-            }
-            printf("Want to continue .press 'y' or 'Y': \n");
-            ch = getche();
+                printf("Enter the data : \n");
+                scanf("%d", &n);
+                new1 = (struct node *)malloc(sizeof(struct node));
+                new1->left = new1->right = NULL;
+                new1->data = n;
+                if (root == NULL)
+                {
+                    root = new1;
+                }
+                else
+                {
+                    create(root, new1);
+                }
+                printf("want to continue . press 1:\n");
+                scanf("%d", &add);
+            } while (add == 1);
             break;
 
         case 2:
             inorder(root);
             break;
+        case 3:
+            preorder(root);
+            break;
+        case 4:
+            postorder(root);
+            break;
+         case 5:
+            nonrecInorder(root);
+            break;    
+
         default:
             printf("unknown choice \n ");
             break;
         }
-    } while (ch != 10 );
+    } while (choice != 10);
 
     return 0;
 }
@@ -95,11 +110,63 @@ void create(struct node *r, struct node *n)
 }
 
 void inorder(struct node *p)
-{   printf("Sorted elements in tree using LNR ");
+{
+
     if (p != NULL)
     {
+        // printf("Sorted elements in tree using LNR \n");
         inorder(p->left);
         printf("%d     ", p->data);
         inorder(p->right);
+    }
+}
+
+void preorder(struct node *p)
+{
+    if (p != NULL)
+    {
+        printf("%d   ", p->data);
+        preorder(p->left);
+        preorder(p->right);
+    }
+}
+
+void postorder(struct node *p)
+{
+    if (p != NULL)
+    {
+        postorder(p->left);
+        postorder(p->right);
+        printf("%d  ", p->data);
+    }
+}
+
+void nonrecInorder(struct node *p)
+{
+    struct node *s[30], *pt;
+    pt = p;
+    int top = 0;
+    s[top] = NULL;
+    while (pt != NULL)
+    {
+        ++top;
+        s[top] = pt;
+        pt = pt->left;
+    }
+    pt = s[top];
+    top--;
+    while (pt != NULL)
+    {
+        printf("%d \n", pt->data);
+        if (pt->right != NULL)
+        {
+            while (pt != NULL)
+            {
+                ++top;
+                s[top] = pt;
+                pt = pt->left;
+            }
+        }
+        pt = s[top--];
     }
 }
