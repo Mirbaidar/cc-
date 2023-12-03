@@ -64,9 +64,9 @@ int main()
         case 4:
             postorder(root);
             break;
-         case 5:
+        case 5:
             nonrecInorder(root);
-            break;    
+            break;
 
         default:
             printf("unknown choice \n ");
@@ -143,30 +143,34 @@ void postorder(struct node *p)
 
 void nonrecInorder(struct node *p)
 {
-    struct node *s[30], *pt;
+    struct node *s[50];
+    struct node *pt;
     pt = p;
-    int top = 0;
-    s[top] = NULL;
+    s[0] = NULL;
+    int top;
     while (pt != NULL)
     {
-        ++top;
+        top++;
         s[top] = pt;
         pt = pt->left;
     }
     pt = s[top];
     top--;
+
     while (pt != NULL)
     {
-        printf("%d \n", pt->data);
+        printf("%d    ", pt->data);
         if (pt->right != NULL)
         {
+            pt = pt->right;
             while (pt != NULL)
             {
-                ++top;
+                top++;
                 s[top] = pt;
                 pt = pt->left;
             }
         }
-        pt = s[top--];
     }
+    pt = s[top];
+    top--;
 }
