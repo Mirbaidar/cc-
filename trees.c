@@ -17,6 +17,7 @@ void inorder(struct node *p);
 void preorder(struct node *p);
 void postorder(struct node *p);
 void nonrecInorder(struct node *p);
+void nonrecpreorder(struct node *p);
 
 int main()
 {
@@ -28,7 +29,8 @@ int main()
         printf("2-inorder\n");
         printf("3-preorder\n");
         printf("4-postorder\n");
-        printf("5-nonrecInorder\n");
+        printf("5-nonrec Inorder\n");
+        printf("6-nonrec preorder\n");
         printf("10-Exit\n");
         scanf("%d", &choice);
 
@@ -67,7 +69,9 @@ int main()
         case 5:
             nonrecInorder(root);
             break;
-
+        case 6:
+            nonrecpreorder(root);
+            break;
         default:
             printf("unknown choice \n ");
             break;
@@ -147,7 +151,7 @@ void nonrecInorder(struct node *p)
     struct node *pt;
     pt = p;
     s[0] = NULL;
-    int top;
+    int top = 0;
     while (pt != NULL)
     {
         top++;
@@ -173,4 +177,29 @@ void nonrecInorder(struct node *p)
     }
     pt = s[top];
     top--;
+}
+
+void nonrecpreorder(struct node *p)
+{
+    struct node *s[50], *pt;
+    int top = 0;
+    s[0] = NULL;
+    while (pt != NULL)
+    {
+        printf("%d", pt->data);
+        if (pt->right != NULL)
+        {
+            top++;
+            s[top] = pt->right;
+        }
+        if (pt->left != NULL)
+        {
+            pt = pt->left;
+        }
+        else
+        {
+            pt = s[top];
+            top = top - 1;
+        }
+    }
 }

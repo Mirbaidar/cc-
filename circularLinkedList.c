@@ -8,6 +8,7 @@ struct cnode
     int data;
     struct cnode *radd;
 };
+
 struct cnode *start, *temp, *new1, *last, *previous, *next;
 char ch;
 

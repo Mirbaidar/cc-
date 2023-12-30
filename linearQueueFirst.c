@@ -1,7 +1,13 @@
 #include <stdio.h>
+
+
 #define maxsize 10
 int queue[maxsize];
-int front = 0, rear = -1;
+
+
+
+int front = 0,rear = -1;
+
 void insert();
 void delete1();
 void display();
@@ -9,6 +15,7 @@ void display();
 int main()
 {
     int choice;
+
     printf("-------queue-------");
     printf("\n 1.insert \n 2.delete \n 3.display \n");
    
@@ -28,6 +35,8 @@ do{
     return 0;
 }
 
+
+
 void insert(){
     int n;
     if(rear == maxsize-1){
@@ -40,6 +49,8 @@ void insert(){
     }
 }
 
+
+
 void display(){
     if(front > rear){
         printf("Queeqe is empty \n");
@@ -50,6 +61,9 @@ void display(){
         }
     }
 }
+
+
+
 
 void delete1(){
     int deleted_ele;

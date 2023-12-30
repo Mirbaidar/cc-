@@ -6,6 +6,7 @@ void push(int arr[],int enter){
       arr[max] = enter;
 }
 
+
 int main(){
     int arr[10];
     int a,addEelNo;
