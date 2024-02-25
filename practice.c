@@ -30,5 +30,22 @@ int main()
     printf("%d  ", arr[i]);
   }
   printf("\nthe difference %d", even_sum - odd_sum);
+  // total number of pairs whose sum is equal to x
+  int x = 12, x_times = 0;
+
+  int array[8] = {0, 1, 2, 3, 4, 5, 6, 7};
+  for (int i = 0; i < 8; i++)
+  {
+    for (int j = 0; j < 8; j++)
+    {
+      if (array[i] + array[j] == x)
+      {
+        x_times += 1;
+        printf("\n%d + %d = 12", array[i], array[j]);
+      }
+    }
+  }
+  printf("\nthe number of times this pair formed is = %d", x_times);
+  
   return 0;
 }
